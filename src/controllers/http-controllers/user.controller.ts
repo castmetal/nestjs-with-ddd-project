@@ -15,8 +15,8 @@ import { CreateUserDTO } from '../../core/applications/dtos/CreateUserDTO';
 import { UserService } from '../../core/applications/services/user.service';
 import { ListAllUsersResponseDTO } from '../../core/applications/dtos/ListAllUsersResponseDTO';
 import { ListAllUsersDTO } from '../../core/applications/dtos/ListAllUsersDTO';
-import { UserScopeDecorator } from '../..//core/domains/common/middlewares/auth.middleware';
-import { UserScopeEnum } from 'src/core/domains/users/user.interfaces';
+import { UserScopeDecorator } from '../../core/domains/common/middlewares/auth.middleware';
+import { UserScopeEnum } from '../../core/domains/users/user.interfaces';
 
 @Controller('users')
 @Injectable({ scope: Scope.REQUEST })
