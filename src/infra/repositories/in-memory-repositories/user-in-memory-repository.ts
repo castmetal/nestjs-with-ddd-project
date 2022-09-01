@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../../../core/domains/users/user.entity';
 import { CreateUserDTO } from '../../../core/applications/dtos/CreateUserDTO';
 import { IUserRepository } from 'src/core/domains/users/iuser.repository';
-import { isNotEmpty } from 'class-validator';
 
 @Injectable()
 export class UserInMemoryRepository implements IUserRepository {

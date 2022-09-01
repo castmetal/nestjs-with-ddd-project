@@ -1,8 +1,8 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { databaseProviders } from './database.providers';
-import configuration from '../../config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import configuration from '../../config/configuration';
 
 @Global()
 @Module({

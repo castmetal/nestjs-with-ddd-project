@@ -1,9 +1,9 @@
 import { createParamDecorator } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import configuration from '../../../../config/configuration';
 import { Response, NextFunction } from 'express';
 import { randomUUID } from 'crypto';
+import configuration from '../../../../config/configuration';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

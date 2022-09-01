@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import configuration from '../../../config/configuration';
 import { UserController } from '../../..//controllers/http-controllers';
 import { UserService } from '../services/user.service';
 import { DatabaseModule } from '../../..//infra/db/database.module';
 import { UserRepository } from '../../..//infra/repositories/user.repository';
-import { DataSource } from 'typeorm';
 import { User } from '../../../core/domains/users/user.entity';
 import { CreateUserUseCase } from '../use-cases/create-user-use-case';
 import { ListAllUsersUseCase } from '../use-cases/list-all-users-use-case';

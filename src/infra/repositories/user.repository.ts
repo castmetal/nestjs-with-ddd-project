@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { IUserRepository } from 'src/core/domains/users/iuser.repository';
-import { User } from 'src/core/domains/users/user.entity';
+import { User } from '../../core/domains/users/user.entity';
 
 export class UserRepository implements IUserRepository {
   constructor(private ormRepo: Repository<User>) {}

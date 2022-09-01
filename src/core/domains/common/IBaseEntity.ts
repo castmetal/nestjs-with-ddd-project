@@ -1,6 +1,6 @@
 import { PrimaryGeneratedColumn } from 'typeorm';
-import { UniqueEntityID } from './UniqueEntityId';
 import crypto from 'crypto';
+import { UniqueEntityID } from './UniqueEntityId';
 
 export abstract class IBaseEntity<T> extends UniqueEntityID {
   private props: T;
