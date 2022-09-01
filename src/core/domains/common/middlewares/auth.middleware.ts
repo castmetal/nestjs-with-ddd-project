@@ -27,8 +27,9 @@ export class AuthMiddleware implements NestMiddleware {
       req.userScope = decodeJwtAuthorizer.scope;
 
       req.headers['request-id'] = randomUUID();
-      next();
     }
+
+    next();
   }
 }
 
