@@ -1,6 +1,6 @@
 import { UserScopeEnum } from '../../../core/domains/users/user.interfaces';
 
-export class CreateUserResponseDTO {
+export class ListAllUsersResponseDTO {
   id: string;
 
   name: string;

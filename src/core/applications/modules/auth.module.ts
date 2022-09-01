@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import configuration from '../../../config/configuration';
-import { UserController } from '../../..//controllers/http-controllers';
-import { UserService } from '../services/user.service';
 import { DatabaseModule } from '../../..//infra/db/database.module';
 import { UserRepository } from '../../..//infra/repositories/user.repository';
 import { DataSource } from 'typeorm';
 import { User } from '../../../core/domains/users/user.entity';
-import { CreateUserUseCase } from '../use-cases/create-user-use-case';
-import { ListAllUsersUseCase } from '../use-cases/list-all-users-use-case';
+import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm';
+import { AuthenticateUserUseCase } from '../use-cases/authenticate-user-use-case';
+import { AuthController } from '../../../controllers/http-controllers/auth.controller';
+import { AuthService } from '../services/auth.service';
 
 @Module({
   imports: [
@@ -18,10 +18,12 @@ import { ListAllUsersUseCase } from '../use-cases/list-all-users-use-case';
       load: [configuration],
     }),
     DatabaseModule,
+    JwtModule.register({ secret: configuration().security.jwt_secret }),
   ],
-  controllers: [UserController],
+  controllers: [AuthController],
   providers: [
-    UserService,
+    AuthService,
+    JwtService,
     {
       provide: UserRepository,
       useFactory: (dataSource: DataSource) => {
@@ -30,19 +32,12 @@ import { ListAllUsersUseCase } from '../use-cases/list-all-users-use-case';
       inject: [getDataSourceToken()],
     },
     {
-      provide: CreateUserUseCase,
-      useFactory: (routeRepo: UserRepository) => {
-        return new CreateUserUseCase(routeRepo);
+      provide: AuthenticateUserUseCase,
+      useFactory: (routeRepo: UserRepository, jwtService: JwtService) => {
+        return new AuthenticateUserUseCase(routeRepo, jwtService);
       },
-      inject: [UserRepository],
-    },
-    {
-      provide: ListAllUsersUseCase,
-      useFactory: (routeRepo: UserRepository) => {
-        return new ListAllUsersUseCase(routeRepo);
-      },
-      inject: [UserRepository],
+      inject: [UserRepository, JwtService],
     },
   ],
 })
-export class UserModule {}
+export class AuthModule {}

@@ -18,4 +18,8 @@ export class UserRepository implements IUserRepository {
   async findByEmail(email: string): Promise<User> {
     return await this.ormRepo.findOneBy({ email });
   }
+
+  async listAll(limit: number, offset: number): Promise<User[]> {
+    return await this.ormRepo.find({ skip: offset, take: limit });
+  }
 }

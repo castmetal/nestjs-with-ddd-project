@@ -33,4 +33,27 @@ export class UserInMemoryRepository implements IUserRepository {
 
     return null;
   }
+
+  async listAll(offset: number, limit: number): Promise<User[]> {
+    const resultItems = [];
+    let items = 0;
+    let currentOffset = 0;
+
+    for (const item of this.users) {
+      if (items - 1 === limit) {
+        items = 0;
+        currentOffset++;
+
+        continue;
+      }
+
+      if (currentOffset === offset) {
+        resultItems.push(item);
+      }
+
+      items++;
+    }
+
+    return resultItems;
+  }
 }

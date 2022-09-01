@@ -15,7 +15,7 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/healthCheck (GET)', () => {
     return request(app.getHttpServer())
       .get('/healthCheck')
       .expect(200)

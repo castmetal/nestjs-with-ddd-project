@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { setPassword } from '../common/helpers/security';
 import { IBaseEntity } from '../common/IBaseEntity';
 import { UserScopeEnum } from './user.interfaces';
 
@@ -12,6 +13,7 @@ export type UserProps = {
   name: string;
   email: string;
   password: string;
+  salt?: string;
   scope: UserScopeEnum;
 };
 
@@ -22,6 +24,10 @@ export class User extends IBaseEntity<UserProps> {
   }
 
   static create(props: UserProps, id?: string) {
+    const passwordData = setPassword(props.password);
+    props.password = passwordData.password;
+    props.salt = passwordData.salt;
+
     let user = new User(props, id);
     user = user.setProps(user, props);
 
@@ -43,7 +49,6 @@ export class User extends IBaseEntity<UserProps> {
       id: this.id,
       name: this.name,
       email: this.email,
-      password: this.password,
       scope: this.scope,
       created_at: this.created_at,
       updated_at: this.updated_at,
@@ -68,6 +73,10 @@ export class User extends IBaseEntity<UserProps> {
     default: UserScopeEnum.USER,
   })
   scope: UserScopeEnum;
+
+  @Column({ type: 'text' })
+  @Index()
+  salt: string;
 
   @CreateDateColumn()
   created_at: Date;

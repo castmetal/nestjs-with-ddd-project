@@ -1,6 +1,6 @@
+import { faker } from '@faker-js/faker';
 import { UserScopeEnum } from '../../../core/domains/users/user.interfaces';
 import { CreateUserUseCase } from './create-user-use-case';
-import { faker } from '@faker-js/faker';
 import { UserInMemoryRepository } from '../../../infra/repositories/in-memory-repositories/user-in-memory-repository';
 
 describe('CreateUserUseCase', () => {

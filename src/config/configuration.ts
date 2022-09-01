@@ -11,4 +11,11 @@ export default () => ({
     entities: __dirname + '/../core/domains/**/*.entity{.ts,.js}',
     migrations: __dirname + '/../infra/db/migrations/*{.ts,.js}',
   },
+  security: {
+    salt: process.env.SALT_HASH || '12345678910ABMNJHGTSYUIOASDKKJASDaa;;.ças',
+    jwt_secret: process.env.JWT_SECRET || 'my.jwt.secret;',
+  },
+  authorization: {
+    header: process.env.AUTHORIZATION_HEADER || 'Authorization',
+  },
 });
