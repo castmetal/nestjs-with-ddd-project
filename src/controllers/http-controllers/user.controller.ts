@@ -6,7 +6,6 @@ import {
   Injectable,
   Param,
   Post,
-  Req,
   Scope,
 } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
@@ -16,8 +15,8 @@ import { CreateUserDTO } from '../../core/applications/dtos/CreateUserDTO';
 import { UserService } from '../../core/applications/services/user.service';
 import { ListAllUsersResponseDTO } from '../../core/applications/dtos/ListAllUsersResponseDTO';
 import { ListAllUsersDTO } from '../../core/applications/dtos/ListAllUsersDTO';
-import { UserScopeEnum } from '../../core/domains/users/user.interfaces';
 import { UserScopeDecorator } from '../..//core/domains/common/middlewares/auth.middleware';
+import { UserScopeEnum } from 'src/core/domains/users/user.interfaces';
 
 @Controller('users')
 @Injectable({ scope: Scope.REQUEST })
@@ -30,9 +29,11 @@ export class UserController {
   @Post('/')
   async createUser(
     @Body() createUserDTO: CreateUserDTO,
-    @Param('userScope') userScope: UserScopeEnum,
+    @UserScopeDecorator() userScope,
   ): Promise<CreateUserResponseDTO> {
-    createUserDTO.scope = userScope;
+    if (userScope !== 'admin') {
+      createUserDTO.scope = UserScopeEnum.USER;
+    }
 
     return this.userService.createUser(createUserDTO);
   }
